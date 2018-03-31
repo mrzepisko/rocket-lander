@@ -146,7 +146,8 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: 
+    Android: pl.mrzepisko.rocketlander
+    iOS: pl.mrzepisko.rocketlander
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
@@ -225,7 +226,7 @@ PlayerSettings:
   appleDeveloperTeamID: 
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
-  appleEnableAutomaticSigning: 0
+  appleEnableAutomaticSigning: 1
   iOSRequireARKit: 0
   appleEnableProMotion: 0
   clonedFromGUID: fe97a795c6621624a9fc94fd2443b1a8
@@ -559,7 +560,12 @@ PlayerSettings:
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 1
   webGLLinkerTarget: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: UI
+    4: UI
+    7: UI
+    13: UI
+    26: UI
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
