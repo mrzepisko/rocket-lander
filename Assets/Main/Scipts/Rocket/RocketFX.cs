@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RocketFX : MonoBehaviour {
+namespace RocketLander {
+    public class RocketFX : MonoBehaviour {
+        [SerializeField] ParticleSystem smoke;
+        [SerializeField] SpriteRenderer spriteFlame;
+        RocketEngine engine;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        private void Awake() {
+            engine = GetComponent<RocketEngine>();    
+        }
+
+        private void Update() {
+            spriteFlame.enabled = engine.ThrottleInput > 0;
+        }
+
+
+    }
 }

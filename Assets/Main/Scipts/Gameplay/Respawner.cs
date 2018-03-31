@@ -25,6 +25,16 @@ namespace RocketLander {
 
         void OnEnable() {
             GameEvents.OnRestart += Respawn;
+            GameEvents.OnRocketCrash += OnCrash;
+            GameEvents.OnRocketTouchdown += OnTouchdown;
+        }
+
+        private void OnTouchdown(GameEvents.RocketTouchdown crash) {
+            Invoke("Respawn", dropDelay);
+        }
+
+        private void OnCrash(GameEvents.RocketCrash crash) {
+            Respawn();
         }
 
         void OnDisable() {
@@ -41,6 +51,8 @@ namespace RocketLander {
 
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             RocketInput.AllowInput = false;
+            engine.ThrottleInput = 0;
+            engine.TorqueInput = 0;
 
             Invoke("DelayDrop", dropDelay);
         }
@@ -48,6 +60,8 @@ namespace RocketLander {
         void DelayDrop() {
             rb.constraints = RigidbodyConstraints2D.None;
             RocketInput.AllowInput = true;
+            PersistentData.AddAttempt();
+            GameEvents.Start();
         }
 
 #if DEBUG

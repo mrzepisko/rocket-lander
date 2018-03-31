@@ -3,27 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace RocketLander {
     public class RocketCollision : MonoBehaviour {
-        [SerializeField] float maxSpeed = .5f;
+        [SerializeField] float maxSpeed = .5f, landedSpeedTreshold = 1f, touchdownTime = 3f;
         [SerializeField] LayerMask deathLayers, platformLayers;
 
         //cache
         RocketEngine engine;
 
+        //counter
+        float touchdown;
+
         void Awake() {
             engine = GetComponent<RocketEngine>();
+            GameEvents.OnStart += EnableOnStart;
         }
 
+        void OnDestroy() {
+            GameEvents.OnStart -= EnableOnStart;    
+        }
+
+        private void OnEnable() {
+            touchdown = 0;
+        }
+
+
         void OnCollisionEnter2D(Collision2D collision) {
+            if (!enabled) return; //high speed crash workaround
             //crashed above speed limit or collided with death layer (water, bounds, etc.)
             if (collision.relativeVelocity.sqrMagnitude > maxSpeed * maxSpeed 
-                || (collision.otherCollider.gameObject.layer & deathLayers.value) > 0) {
+                || ((1 << collision.collider.gameObject.layer) & deathLayers.value) > 0) {
                 GameEvents.Crash(new GameEvents.RocketCrash() {
                     position = transform.position,
                     rotation = transform.eulerAngles.z,
                     velocity = collision.relativeVelocity,
                     fuelLeft = engine.FuelLeft,
                 });
+                enabled = false;
             }
+        }
+
+        void OnCollisionStay2D(Collision2D collision) {
+            if (!enabled) return; //high speed crash workaround
+            //staying on platform layer below speed treshold
+            if (((1 << collision.collider.gameObject.layer) & platformLayers.value) > 0 
+                && collision.relativeVelocity.sqrMagnitude <= landedSpeedTreshold * landedSpeedTreshold
+                && Mathf.Abs(collision.otherRigidbody.angularVelocity) < 1) {
+                touchdown += Time.fixedDeltaTime;
+                if (touchdown >= touchdownTime) {
+                    GameEvents.RocketLanded(new GameEvents.RocketTouchdown() {
+                        fuelLeft = engine.FuelLeft,
+                    });
+                    enabled = false;
+                }
+            } else {
+                touchdownTime = 0;
+            }    
+        }
+
+        void EnableOnStart() {
+            enabled = true;
         }
     }
 }

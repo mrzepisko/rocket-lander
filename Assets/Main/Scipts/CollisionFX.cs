@@ -18,6 +18,7 @@ namespace RocketLander {
         void Emit(GameEvents.RocketCrash crash) {
             transform.position = crash.position;
             transform.rotation = Quaternion.AngleAxis(crash.rotation, Vector3.forward);
+            crashParticles.Clear();
             crashParticles.Play();
         }
     }
