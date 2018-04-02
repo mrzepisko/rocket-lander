@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html charset="utf-8">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Rocket Lander Configurator</title>
+<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet"> 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+body {
+    font-family: 'Inconsolata', monospace;
+}
+button {
+    cursor: pointer;
+}
+button a {
+    color: #000;
+    font-family: 'Inconsolata', monospace;
+    text-decoration: none;
+}
+fieldset {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+fieldset > * {
+    display: flex;
+    margin: 5px 0;
+    justify-content: space-between;
+}
+input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #aaa;
+    text-align: right;
+}
+input[type="text"]:focus {
+    border-color: #000;
+    background: #ddd;
+}
+.disabled button {
+    display: none;
+}
+.form-wrapper {
+    max-width: 320px;
+    padding: 10px;
+}
+</style>
+<script>
+const save = () => {
+            // send ajax
+            jQuery.ajax({
+                url: 'lib.php', // url where to submit the request
+                type : "POST", // type of action POST || GET
+                dataType : 'json', // data type
+                data : $("form").serialize(), // post data || get data
+                success : function(result) {
+                    // you can see the result from the console
+                    // tab of the developer tools
+                    console.log(result);
+                    toggleLock(false);
+                },
+                error: function(xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                    toggleLock(false);
+                }
+            });
+};
+const load = (mode) => {
+        // send ajax
+        jQuery.ajax({
+            url: 'lib.php', // url where to submit the request
+            type : "POST", // type of action POST || GET
+            dataType : 'json', // data type
+            data :  {'load' : mode, }, // post data || get data
+            success : function(result) {
+                fillForm(result);
+            },
+            error: function(xhr, resp, text) {
+                console.log(xhr, resp, text);
+                toggleLock(false);
+            }
+        });
+};
+
+const fillForm = (json) => {
+    $form = jQuery('form');
+    jQuery.each(json, (k, v) => {
+        let $ctrl = jQuery('[name=' + k + ']', $form);
+        $ctrl.val(v);
+    });
+    toggleLock(false);
+};
+
+const toggleLock = (lock) => {
+    $form = jQuery('.form-wrapper');
+    if (!lock) {
+        console.log('unlock');
+        $form.removeClass('disabled');
+        jQuery('[disabled]', ($it) => {
+            $it.removeAttr('disabled');
+        });
+    } else {
+        console.log('lock');
+        $form.addClass('disabled');
+        jQuery('[disabled]', ($it) => {
+            $it.attr('disabled', 'disabled');
+        });
+    }
+}
+
+jQuery(document).ready(() => {
+    jQuery('#save').click(() => {
+        toggleLock(true);
+        save();
+        return false;
+    });
+    
+    jQuery('#reset').click(() => {
+        toggleLock(true);
+        load(0);
+        return false;
+    });
+    
+    toggleLock(true);
+    load(1);
+});
+</script>
+<script></script>
+</head>
+<body>
+<h1>Rocket Lander Configurator</h1>
+<div class="form-wrapper">
+<form>
+<fieldset>
+<p><label for="gravity">Gravity</label><input type="text" name="gravity" id="gravity"/></p>
+<p><label for="fuel">Fuel</label><input type="text" name="fuel" id="fuel"/></p>
+<p><label for="thrust">Thrust</label><input type="text" name="thrust" id="thrust"/></p>
+<p><label for="torque">Torque</label><input type="text" name="torque" id="torque"/></p>
+<p><label for="mass">Mass</label><input type="text" name="mass" id="mass"/></p>
+</fieldset>
+</form>
+<div class="controls"><div>&nbsp;</div><div><button id="save">Save</button><button id="reset">Defaults</button></div></div>
+</div>
+</body>
+</html>
