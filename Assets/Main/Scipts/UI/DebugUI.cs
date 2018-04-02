@@ -25,7 +25,9 @@ namespace RocketLander {
             rect.y -= 20f;
             GUI.Label(rect, string.Format("Speed: {0:0.0000}", rocket.velocity.magnitude));
             rect.y -= 20f;
-            GUI.Label(rect, string.Format("Touchdown: {0:0.0000}s", RocketCollision.touchdown));
+            GUI.Label(rect, string.Format("Touchdown: {0:0.000}s", RocketCollision.touchdown));
+            rect.y -= 20f;
+            GUI.Label(rect, string.Format("Up dot: {0:0.0000}", Vector3.Dot(Vector3.up, rocket.transform.up)));
         }
 #else
         private void Awake() {

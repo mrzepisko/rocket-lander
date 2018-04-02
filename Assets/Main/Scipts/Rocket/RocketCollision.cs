@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace RocketLander {
     public class RocketCollision : MonoBehaviour {
-        [SerializeField] float maxSpeed = .5f, landedSpeedTreshold = 1f, touchdownMinTime = 5f;
+        [SerializeField] float maxSpeed = .5f, landedSpeedTreshold = 1f, touchdownMinTime = 5f, landedDot = .999f;
         [SerializeField] LayerMask deathLayers, platformLayers;
         
 #if DEBUG
@@ -61,7 +61,7 @@ namespace RocketLander {
             //staying on platform layer below speed treshold
             if (((1 << collision.collider.gameObject.layer) & platformLayers.value) > 0
                 && collision.relativeVelocity.magnitude <= landedSpeedTreshold
-                && Mathf.Abs(collision.otherRigidbody.angularVelocity) < 1) {
+                && Vector3.Dot(Vector3.up, transform.up) >= landedDot) {
                 touchdown += Time.fixedDeltaTime;
                 if (touchdown >= touchdownMinTime) {
                     GameEvents.RocketLanded(new GameEvents.RocketTouchdown() {
