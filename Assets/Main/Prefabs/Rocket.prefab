@@ -377,7 +377,7 @@ MonoBehaviour:
   maxSpeed: 0.32
   landedSpeedTreshold: 0.5
   touchdownMinTime: 1.5
-  landedDot: 0.1
+  landedDot: 0.999
   deathLayers:
     serializedVersion: 2
     m_Bits: 1024
