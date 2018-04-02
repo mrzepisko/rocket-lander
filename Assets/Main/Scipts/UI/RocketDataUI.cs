@@ -40,7 +40,7 @@ namespace RocketLander {
 
         void OnCrash(GameEvents.RocketCrash crash) {
             CancelInvoke("HideCrashInfo");
-            crashInfo.text = string.Format("CRASH! Relative velocity: {0:0.00}", crash.velocity.magnitude);
+            crashInfo.text = string.Format("CRASH! Speed limit exceeded by {0:P2}", crash.overkill - 1);
             Invoke("HideCrashInfo", 2f);
         }
 
