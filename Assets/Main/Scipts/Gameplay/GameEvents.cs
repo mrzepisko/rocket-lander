@@ -47,6 +47,7 @@ namespace RocketLander {
             public float rotation;
             public Vector3 velocity;
             public float fuelLeft;
+            public float overkill;
         }
     }
 }

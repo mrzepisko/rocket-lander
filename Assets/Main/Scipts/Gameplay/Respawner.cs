@@ -43,7 +43,6 @@ namespace RocketLander {
 
         public void Respawn() {
             CancelInvoke("DelayDrop");
-            engine.RefreshConfig();
             rb.velocity = Vector3.zero;
             rb.angularVelocity = 0;
             engine.transform.rotation = Quaternion.AngleAxis(Mathf.Lerp(-randomRotation, randomRotation, Random.value), Vector3.forward);
@@ -58,6 +57,7 @@ namespace RocketLander {
         }
 
         void DelayDrop() {
+            engine.RefreshConfig();
             rb.constraints = RigidbodyConstraints2D.None;
             RocketInput.AllowInput = true;
             PersistentData.AddAttempt();

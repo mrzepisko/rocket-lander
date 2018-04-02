@@ -5337,15 +5337,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 668854019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a89097c9be6f4d44da0eb0c593ac470d, type: 3}
+  m_Script: {fileID: 11500000, guid: 982cbfb18ba57fe43b7baa437713e823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parameters:
-    gravity: 2.5
-    fuel: 6
-    thrust: 620
-    torque: 15
-    mass: 3
+  json: {fileID: 4900000, guid: d48396faf2228fb42b0b6255dac4d3b1, type: 3}
+  url: http://cyberpho.com/dev/rl/custom.json
 --- !u!114 &668854025
 MonoBehaviour:
   m_ObjectHideFlags: 0
