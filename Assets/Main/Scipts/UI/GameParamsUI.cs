@@ -21,7 +21,7 @@ namespace RocketLander {
 
         private void OnDownloadComplete(bool status, GameParams gameParams) {
             downloadStatus.color = status ? Color.green : Color.red;
-            downloadStatus.text = string.Format("{0} ({1})", status ? "Completed" : "Download failed", DownloadCacheJSON.URL);
+            downloadStatus.text = status ? "Completed" : "Download failed";
             target = gameParams;
             RefreshUI();
         }

@@ -56,6 +56,8 @@ namespace RocketLander {
             ColorBlock colors = inputURL.colors;
             colors.normalColor = Color.red;
             inputURL.colors = colors;
+            DownloadCacheJSON.ResetURL();
+            DownloadCacheJSON.Reload();
         }
 
         void ValidURL(string url) {
