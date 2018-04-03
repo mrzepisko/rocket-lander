@@ -16,17 +16,15 @@ namespace RocketLander {
         void Awake() {
             rb = GetComponent<Rigidbody2D>();
             engine = GetComponent<RocketEngine>();
-        }
-
-        void Start() {
             dropCenter = Vector3.up * dropHeight;
-            Respawn();
         }
+        
 
         void OnEnable() {
             GameEvents.OnRestart += Respawn;
             GameEvents.OnRocketCrash += OnCrash;
             GameEvents.OnRocketTouchdown += OnTouchdown;
+            Respawn();
         }
 
         private void OnTouchdown(GameEvents.RocketTouchdown crash) {
