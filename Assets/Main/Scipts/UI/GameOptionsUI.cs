@@ -12,12 +12,15 @@ namespace RocketLander {
         Respawner _r;
         Respawner respawner { get { if (_r == null) { _r = FindObjectOfType<Respawner>(); } return _r; } }
 
-        private void OnEnable() {
+        void OnEnable() {
             respawner.gameObject.SetActive(false);
         }
 
-        private void OnDisable() {
-            respawner.gameObject.SetActive(true);
+        void OnDisable() {
+            //exit check
+            if (respawner != null) {
+                respawner.gameObject.SetActive(true);
+            }
         }
 
         public void VerifyURL() {
@@ -39,6 +42,13 @@ namespace RocketLander {
                 } catch {
                     InvalidURL();
                 }
+            }
+        }
+
+        public void OnToggleCustom(bool value) {
+            if (!value) {
+                DownloadCacheJSON.ResetURL();
+                DownloadCacheJSON.Reload();
             }
         }
 

@@ -11,6 +11,7 @@ namespace RocketLander {
         public static event RocketCrashAction OnRocketCrash;
         public static event RocketTouchdownAction OnRocketTouchdown;
         public static event NotifyAction OnRestart;
+        public static event NotifyAction OnFuelDepleted;
         public static event NotifyAction OnStart;
 
         public static void Crash(RocketCrash crash) {
@@ -35,6 +36,12 @@ namespace RocketLander {
         public static void Start() {
             if (OnStart != null) {
                 OnStart();
+            }
+        }
+
+        public static void FuelDepleted() {
+            if (OnFuelDepleted != null) {
+                OnFuelDepleted();
             }
         }
 

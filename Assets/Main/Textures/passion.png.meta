@@ -21,6 +21,9 @@ TextureImporter:
     21300032: platform
     21300034: button
     21300036: important_image
+    21300038: dot
+    21300040: mono_1
+    21300042: mono_2
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -501,13 +504,73 @@ TextureImporter:
         width: 512
         height: 320
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 761c38bca81dce041beca9134fff5c0f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dot
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 1
+        width: 1
+        height: 1
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8aa659c034139c648b8fd0d844f21913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mono_1
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 110
+        width: 21
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bd4fabf095a24a4888e344f129cf6c5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mono_2
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 118
+        width: 21
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1577c182481b35140bbd73259521f650
       vertices: []
       indices: 
       edges: []

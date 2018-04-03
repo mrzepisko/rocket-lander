@@ -7,12 +7,15 @@ namespace RocketLander {
         static DownloadCacheJSON instance { get { if (_i == null) Init(); return _i; } }
         static DownloadCacheJSON _i;
 
-        public static string URL { get; set; }
+        public static string URL { get { return _url; } set { if (defaultURL == null) defaultURL = value; _url = value; } }
         public static GameParams Default { get; set; }
         public static GameParams Cached { get { return instance.cache; } }
 
         public delegate void DownloadCompletedAction(bool status, GameParams gameParams);
         public static event DownloadCompletedAction OnDownloadCompleted;
+
+        static string _url;
+        static string defaultURL;
 
         GameParams cache;
 
@@ -26,6 +29,10 @@ namespace RocketLander {
 
         static void Init() {
             new GameObject("_downloadCache", typeof(DownloadCacheJSON));
+        }
+
+        public static void ResetURL() {
+            _url = defaultURL;
         }
 
         private void Awake() {

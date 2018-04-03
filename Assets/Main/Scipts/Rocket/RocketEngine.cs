@@ -55,6 +55,7 @@ namespace RocketLander {
             } else if (fuel > 0) { //fuel too low to burn on 100% efficiency
                 thrustVector = transform.up * (fuel / fuelConsumption) * thrust;
                 fuel = 0;
+                GameEvents.FuelDepleted();
             } else { //no fuel
                 thrustVector = Vector3.zero;
             }
