@@ -3,13 +3,12 @@ using System.Collections;
 using UnityEngine;
 namespace RocketLander {
     public class GameParamsRemoteJSON : GameParamsJSON {
-        const string DEFAULT_URL = "http://cyberpho.com/dev/rl/custom.js";
+        const string DEFAULT_URL = "";
         const string PREFS_CACHE_VERSION = "params_version";
         [SerializeField] string url = DEFAULT_URL;
         
 
         private void Awake() {
-            DownloadCacheJSON.URL = url;
         }
 
         private void Start() {
@@ -17,7 +16,13 @@ namespace RocketLander {
         }
 
         public override GameParams GetParams() {
-            return DownloadCacheJSON.Cached;
+            if (DownloadCacheJSON.Status.Equals(DownloadStatus.Ready)) {
+                Debug.Log("Loading remote JSON");
+                return DownloadCacheJSON.Cached;
+            } else {
+                Debug.Log("Loading default JSON");
+                return base.GetParams();
+            }
         }
 
 #if UNITY_EDITOR

@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace RocketLander {
     public class DownloadCacheJSON : MonoBehaviour {
+        const string VALID_URL_REGEX = @"/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/";
         static DownloadCacheJSON instance { get { if (_i == null) Init(); return _i; } }
         static DownloadCacheJSON _i;
 
         public static string URL { get { return _url; } set { if (defaultURL == null) defaultURL = value; _url = value; } }
+        public static DownloadStatus Status { get { return _status;  } }
         public static GameParams Default { get; set; }
         public static GameParams Cached { get { return instance.cache; } }
 
@@ -16,6 +19,7 @@ namespace RocketLander {
 
         static string _url;
         static string defaultURL;
+        static DownloadStatus _status = DownloadStatus.Downloading;
 
         GameParams cache;
 
@@ -24,7 +28,8 @@ namespace RocketLander {
         }
 
         public void Refresh() {
-            StartCoroutine(Download());
+            _status = DownloadStatus.Downloading;
+            StartCoroutine(Download(URL));
         }
 
         static void Init() {
@@ -69,23 +74,35 @@ namespace RocketLander {
         #endregion
 
 
-        IEnumerator Download() {
-            using (WWW remote = new WWW(URL)) {
-                while (!remote.isDone) {
-                    yield return null;
+        IEnumerator Download(string url) {
+            bool status = false;
+            try {
+                if (!string.IsNullOrEmpty(url)) {
+                    using (WWW remote = new WWW(url)) {
+                        while (!remote.isDone) {
+                            yield return null;
+                        }
+                        cache = JsonUtility.FromJson<GameParams>(remote.text);
+                        status = true;
+                    }
                 }
-                bool status;
-                try {
-                    cache = JsonUtility.FromJson<GameParams>(remote.text);
-                    status = true;
-                } catch {
+            } finally {
+                if (status) {
                     cache = Default;
-                    status = false;
+                    _status = DownloadStatus.Error;
+                } else {
+                    _status = DownloadStatus.Ready;
                 }
+
                 if (OnDownloadCompleted != null) {
                     OnDownloadCompleted(status, cache);
                 }
             }
         }
+    }
+    public enum DownloadStatus {
+        Downloading,
+        Ready,
+        Error,
     }
 }

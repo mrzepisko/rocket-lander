@@ -32,14 +32,21 @@ namespace RocketLander {
                 InvalidURL();
                 yield break;
             }
-            using (WWW www = new WWW(url)) {
-                while (!www.isDone) {
-                    yield return null;
+            bool valid = false;
+            try {
+                using (WWW www = new WWW(url)) {
+                    while (!www.isDone) {
+                        yield return null;
+                    }
+                    if (!string.IsNullOrEmpty(www.text)) {
+                        GameParams check = JsonUtility.FromJson<GameParams>(www.text);
+                        valid = true;
+                    }
                 }
-                try {
-                    GameParams check = JsonUtility.FromJson<GameParams>(www.text);
+            } finally {
+                if (valid) {
                     ValidURL(url);
-                } catch {
+                } else {
                     InvalidURL();
                 }
             }

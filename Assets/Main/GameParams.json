@@ -1,7 +1,7 @@
 {
-    "gravity": 2.5,
-    "fuel": 6.0,
-    "thrust": 620.0,
-    "torque": 15.0,
-    "mass": 3.0
+    "gravity": 1.7,
+    "fuel": 7.0,
+    "thrust": 810.0,
+    "torque": 10.0,
+    "mass": 6.0
 }

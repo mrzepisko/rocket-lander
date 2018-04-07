@@ -32,7 +32,7 @@ namespace RocketLander {
 
         void Download() {
             DownloadCacheJSON.Reload();
-            downloadStatus.text = "Downloading...";
+            downloadStatus.text = "Waiting...";
             downloadStatus.color = Color.yellow;
         }
 
