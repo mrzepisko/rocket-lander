@@ -870,7 +870,6 @@ MonoBehaviour:
   spriteFlame: {fileID: 212456436880849318}
   spriteMonoLeft: {fileID: 212360773133180152}
   spriteMonoRight: {fileID: 212169275622103634}
-  sfxTouchdown: {fileID: 8300000, guid: 99245ad482fe1654ab9a219bcee3742b, type: 3}
   sfxCrash: {fileID: 8300000, guid: 29893558e1beed040a95db059004fe92, type: 3}
   sfxContact: {fileID: 8300000, guid: a809a4c1d62ffc64c9303b08c0d49950, type: 3}
   sfxFuel: {fileID: 8300000, guid: b314389baae8dc94b965c1ced1eb5090, type: 3}
