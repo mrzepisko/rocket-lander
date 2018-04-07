@@ -4,6 +4,9 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 namespace RocketLander {
+    /// <summary>
+    /// Persistent info about attempts and landings.
+    /// </summary>
     public static class PersistentData {
         public static int Landed { get { return score.Landed; } }
         public static int Total { get { return score.Total; } }
@@ -79,6 +82,9 @@ namespace RocketLander {
             #endregion
         }
 
+        /// <summary>
+        /// Score manager abstract.
+        /// </summary>
         interface ScoreManager {
             int Landed { get; }
             int Total { get; }

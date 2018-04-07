@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace RocketLander {
+    /// <summary>
+    /// Controls for touch input.
+    /// </summary>
     public class RocketInputTouch : RocketInput {
-        [SerializeField] int maxHeight = 400;
+        [Tooltip("Screen height in pixels below touch registers as control input")]
+        [SerializeField]int maxHeight = 400;
         [SerializeField] [Range(0, 1f)] float center = .5f;
 
         RocketEngine _re;

@@ -40,7 +40,7 @@ namespace RocketLander {
             _url = defaultURL;
         }
 
-        private void Awake() {
+        void Awake() {
             if (_i == null) {
                 _i = this;
                 cache = Default;
@@ -53,12 +53,12 @@ namespace RocketLander {
 
         #region events
 
-        private void OnEnable() {
+        void OnEnable() {
             GameEvents.OnRocketCrash += Refresh;
             GameEvents.OnRocketTouchdown += Refresh;
         }
 
-        private void OnDisable() {
+        void OnDisable() {
             GameEvents.OnRocketCrash -= Refresh;
             GameEvents.OnRocketTouchdown -= Refresh;
         }
@@ -77,16 +77,19 @@ namespace RocketLander {
         IEnumerator Download(string url) {
             bool status = false;
             try {
+                //check for valid url
                 if (!string.IsNullOrEmpty(url)) {
                     using (WWW remote = new WWW(url)) {
+                        //wait until ready
                         while (!remote.isDone) {
                             yield return null;
                         }
+                        //parse to json
                         cache = JsonUtility.FromJson<GameParams>(remote.text);
                         status = true;
                     }
                 }
-            } finally {
+            } finally { //check status, send notify
                 if (status) {
                     cache = Default;
                     _status = DownloadStatus.Error;

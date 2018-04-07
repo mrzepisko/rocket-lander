@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace RocketLander {
+    /// <summary>
+    /// Music controller.
+    /// </summary>
     public class MusicSFX : MonoBehaviour {
         [SerializeField] bool persistent = true;
         [SerializeField] AudioClip game, win, intro;

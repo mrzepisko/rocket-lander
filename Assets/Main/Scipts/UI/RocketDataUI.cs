@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace RocketLander {
+    /// <summary>
+    /// In-game HUD containing info about gameplay.
+    /// </summary>
     public class RocketDataUI : MonoBehaviour {
 #if UI
         const string SPEED_FORMAT_X = "x: {0:+0.00;-0.00}", SPEED_FORMAT_Y = "y: {0:+0.00;-0.00}", ATTEMPTS_FORMAT = "score: {0}/{1}"; 

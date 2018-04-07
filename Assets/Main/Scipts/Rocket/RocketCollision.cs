@@ -31,7 +31,7 @@ namespace RocketLander {
             GameEvents.OnStart -= EnableOnStart;    
         }
 
-        private void OnEnable() {
+        void OnEnable() {
             touchdown = 0;
         }
 
@@ -62,7 +62,7 @@ namespace RocketLander {
             if (((1 << collision.collider.gameObject.layer) & platformLayers.value) > 0
                 && collision.relativeVelocity.magnitude <= landedSpeedTreshold
                 && Vector3.Dot(Vector3.up, transform.up) >= landedDot) {
-                touchdown += Time.fixedDeltaTime;
+                touchdown += Time.fixedDeltaTime; //touchdown timer
                 if (touchdown >= touchdownMinTime) {
                     GameEvents.RocketLanded(new GameEvents.RocketTouchdown() {
                         fuelLeft = engine.FuelLeft,
@@ -70,12 +70,12 @@ namespace RocketLander {
                     enabled = false;
                 }
             } else {
-                touchdown = 0;
+                touchdown = 0; //reset touchdown cooldown
             }
         }
 
         void OnCollisionExit2D(Collision2D collision) {
-            touchdown = 0;
+            touchdown = 0; //reset touchdown cooldown if rocket flies away
         }
         
         void EnableOnStart() {

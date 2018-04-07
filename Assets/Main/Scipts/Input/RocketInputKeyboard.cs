@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace RocketLander {
+    /// <summary>
+    /// Simple keyboard control implementation.
+    /// </summary>
     public class RocketInputKeyboard : RocketInput {
 #if UNITY_EDITOR
         RocketEngine _re;

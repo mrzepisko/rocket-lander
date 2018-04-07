@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace RocketLander {
+
     public class GameOptionsUI : MonoBehaviour {
         [SerializeField] InputField inputURL;
         [SerializeField] Toggle toggleCustom;
@@ -27,26 +28,36 @@ namespace RocketLander {
             StartCoroutine(VerifyDownload(inputURL.text));
         }
 
+        /// <summary>
+        /// Check provided url if contains valid json data for configuration.
+        /// </summary>
+        /// <param name="url">target json</param>
+        /// <returns></returns>
         IEnumerator VerifyDownload(string url) {
-            if (url == null || url.Length == 0) {
+            //invalid url 
+            if (string.IsNullOrEmpty(url)) {
                 InvalidURL();
                 yield break;
             }
             bool valid = false;
             try {
+                //begin download
                 using (WWW www = new WWW(url)) {
+                    //wait until done
                     while (!www.isDone) {
                         yield return null;
                     }
+                    //check if valid response
                     if (!string.IsNullOrEmpty(www.text)) {
                         GameParams check = JsonUtility.FromJson<GameParams>(www.text);
                         valid = true;
                     }
                 }
             } finally {
+                //valid json
                 if (valid) {
                     ValidURL(url);
-                } else {
+                } else { //invalid url - error occured in any step
                     InvalidURL();
                 }
             }

@@ -8,7 +8,7 @@ namespace RocketLander {
     public class ShowDot : MonoBehaviour {
         [SerializeField] Vector3 world = Vector3.up;
         [SerializeField] float dot;
-        private void Update() {
+        void Update() {
             dot = Vector3.Dot(world, transform.up);
         }
     }

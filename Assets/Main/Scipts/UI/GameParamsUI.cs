@@ -4,22 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace RocketLander {
+    /// <summary>
+    /// UI info about downloaded config.
+    /// </summary>
     public class GameParamsUI : MonoBehaviour {
         [SerializeField] Text gravity, fuel, thrust, torque, mass, downloadStatus;
 
         GameParams target;
 
-        private void OnEnable() {
+        void OnEnable() {
             downloadStatus.text = "";
             DownloadCacheJSON.OnDownloadCompleted += OnDownloadComplete;
             Download();
         }
 
-        private void OnDisable() {
+        void OnDisable() {
             DownloadCacheJSON.OnDownloadCompleted -= OnDownloadComplete;
         }
 
-        private void OnDownloadComplete(bool status, GameParams gameParams) {
+        void OnDownloadComplete(bool status, GameParams gameParams) {
             downloadStatus.color = status ? Color.green : Color.red;
             downloadStatus.text = status ? "Completed" : "Download failed";
             target = gameParams;

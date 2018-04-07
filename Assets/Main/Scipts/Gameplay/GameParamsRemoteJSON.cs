@@ -2,37 +2,33 @@
 using System.Collections;
 using UnityEngine;
 namespace RocketLander {
+    /// <summary>
+    /// Downloads game params as custom json from remote url.
+    /// </summary>
     public class GameParamsRemoteJSON : GameParamsJSON {
         const string DEFAULT_URL = "";
         const string PREFS_CACHE_VERSION = "params_version";
         [SerializeField] string url = DEFAULT_URL;
         
-
-        private void Awake() {
-        }
-
-        private void Start() {
+        void Start() {
             DownloadCacheJSON.Reload();
         }
 
         public override GameParams GetParams() {
+            //get remote params if downloaded, otherwise use provided text asset
             if (DownloadCacheJSON.Status.Equals(DownloadStatus.Ready)) {
-                Debug.Log("Loading remote JSON");
                 return DownloadCacheJSON.Cached;
             } else {
-                Debug.Log("Loading default JSON");
                 return base.GetParams();
             }
         }
 
-#if UNITY_EDITOR
-        private void OnValidate() {
+        void OnValidate() {
             if (Application.isPlaying) {
                 DownloadCacheJSON.URL = url;
                 DownloadCacheJSON.Default = base.GetParams();
             }
         }
-#endif
     }
 
 }

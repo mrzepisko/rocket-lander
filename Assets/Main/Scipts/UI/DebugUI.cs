@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using System.Linq;
 
 namespace RocketLander {
+    /// <summary>
+    /// Displays debug data. Only available if DEBUG flag is set.
+    /// </summary>
     [DefaultExecutionOrder(200000)]
     public class DebugUI : MonoBehaviour {
 #if DEBUG
@@ -12,11 +15,11 @@ namespace RocketLander {
 
         [SerializeField] Text collisionForce;
 
-        private void Start() {
+        void Start() {
             rocket = FindObjectOfType<RocketEngine>().GetComponent<Rigidbody2D>();
         }
 
-        private void OnGUI() {
+        void OnGUI() {
             Rect rect = new Rect(0, Screen.height - 20, Screen.width, 20);
             GUI.color = Color.red;
             GUI.Label(rect, string.Format("Last collision: {0:0.0000}", RocketCollision.relativeForce.ToString()));
@@ -30,7 +33,7 @@ namespace RocketLander {
             GUI.Label(rect, string.Format("Up dot: {0:0.0000}", Vector3.Dot(Vector3.up, rocket.transform.up)));
         }
 #else
-        private void Awake() {
+        void Awake() {
             Destroy(gameObject);
         }
 #endif

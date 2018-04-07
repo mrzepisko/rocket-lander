@@ -15,10 +15,14 @@ namespace RocketLander {
             GameEvents.OnRocketCrash -= Emit;
         }
 
+        /// <summary>
+        /// Emit crash particles at given position.
+        /// </summary>
+        /// <param name="crash">crash event info</param>
         void Emit(GameEvents.RocketCrash crash) {
             transform.position = crash.position;
             transform.rotation = Quaternion.AngleAxis(crash.rotation, Vector3.forward);
-            crashParticles.Clear();
+            crashParticles.Clear(); //hide old crash particles
             crashParticles.Play();
         }
     }
