@@ -84,9 +84,11 @@ namespace RocketLander {
                         while (!remote.isDone) {
                             yield return null;
                         }
-                        //parse to json
-                        cache = JsonUtility.FromJson<GameParams>(remote.text);
-                        status = true;
+                        if (!string.IsNullOrEmpty(remote.text)) {
+                            //parse to json
+                            cache = JsonUtility.FromJson<GameParams>(remote.text);
+                            status = true;
+                        }
                     }
                 }
             } finally { //check status, send notify
