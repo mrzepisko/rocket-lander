@@ -92,7 +92,7 @@ namespace RocketLander {
                     }
                 }
             } finally { //check status, send notify
-                if (status) {
+                if (!status) {
                     cache = Default;
                     _status = DownloadStatus.Error;
                 } else {
